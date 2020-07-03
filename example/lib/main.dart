@@ -1,32 +1,32 @@
 import 'dart:async';
 
+import 'package:event_bus/event_bus.dart';
 import 'package:event_bus_auto/event.dart';
 import 'package:event_bus_auto/event_auto.dart';
 
-import 'package:example/event/login_event.dart';
-
-import 'config/application.dart';
-import 'event/login_event.dart';
 part 'main.g.dart';
 
-void main() {
-  EventAuto.eventBus = Application.eventBus;
+class LoginEvent {}
 
-  final subscriptionClass = SubscriptionClass();
-  subscriptionClass.registerEvents();
-
-  Application.eventBus.fire(LoginEvent());
-
-  // subscriptionClass.unRegisterEvents();
-}
-
-class Store {}
-
-@eventauto
-class SubscriptionClass extends Store with _$SubscriptionClassEvent, _$SubscriptionClassEventAuto {
+@EventAuto()
+class Logic with _$LogicEvent, _$LogicEventAuto {
   @override
   @event
   void onLogin(LoginEvent event) {
     print('login event');
   }
+}
+
+void main() {
+  final eventBus = EventBus();
+
+  // set eventbus instance
+  EventAuto.eventBus = eventBus;
+
+  final logic = Logic();
+  logic.registerEvents();
+
+  eventBus.fire(LoginEvent());
+
+  // logic.unRegisterEvents();
 }

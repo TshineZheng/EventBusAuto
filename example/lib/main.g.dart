@@ -6,11 +6,11 @@ part of 'main.dart';
 // EventBusAutoGenerator
 // **************************************************************************
 
-abstract class _$SubscriptionClassEvent {
+abstract class _$LogicEvent {
   void onLogin(LoginEvent event);
 }
 
-mixin _$SubscriptionClassEventAuto on _$SubscriptionClassEvent {
+mixin _$LogicEventAuto on _$LogicEvent {
   StreamSubscription<LoginEvent> onLoginSub;
   void registerEvents() {
     onLoginSub = EventAuto.eventBus.on<LoginEvent>().listen(onLogin);

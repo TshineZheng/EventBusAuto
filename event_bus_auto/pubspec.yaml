@@ -1,6 +1,6 @@
 name: event_bus_auto
 description: A tool for generating un/registerEvents method for EventBus, based on build_runner.
-version: 0.0.1+2
+version: 0.0.1+3
 repository: https://github.com/TshineZheng/EventBusAuto
 homepage: https://blog.tshine.me
 # author: Tshine <gtshine@gmail.com>
