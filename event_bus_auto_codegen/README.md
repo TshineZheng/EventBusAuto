@@ -1,22 +1,3 @@
-A library for Dart developers.
+Provider builder and generator for package event_bus_auto.
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
-
-## Usage
-
-A simple usage example:
-
-```dart
-import 'package:event_bus_auto_codegen/event_bus_auto_codegen.dart';
-
-main() {
-  var awesome = new Awesome();
-}
-```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
+See [here](https://pub.dev/packages/event_bus_auto) for more information.

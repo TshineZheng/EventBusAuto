@@ -1,22 +1,45 @@
-A library for Dart developers.
+# EventBusAuto
+A tool for generating un/registerEvents method for [EventBus](https://pub.flutter-io.cn/packages/event_bus), based on `build_runner`.
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+# Installation
+Add dependencies in your `pubspec.yaml`:
 
-## Usage
+```yaml
+dependencies:
+  event_bus_auto: 0.0.1
 
-A simple usage example:
-
-```dart
-import 'package:event_bus_auto/event_bus_auto.dart';
-
-main() {
-  var awesome = new Awesome();
-}
+dev_dependencies:
+  build_runner: ^1.10.0
+  event_bus_auto_codegen: 0.0.1
 ```
 
-## Features and bugs
+# Usage
+```dart
+part 'xxx.g.dart';
 
-Please file feature requests and bugs at the [issue tracker][tracker].
+class LoginEvent{
+}
 
-[tracker]: http://example.com/issues/replaceme
+@EventAuto()
+class Logic with _$LogicextendsEvent, _$LogicextendsEventAuto {
+  @override
+  @event
+  void onLogin(LoginEvent event) {
+    print('login event');
+  }
+}
+
+void main() {
+  final eventBus = EventBus();
+
+  // set eventbus instance
+  EventAuto.eventBus = eventBus;
+
+  final logic = Logic();
+  logic.registerEvents();
+
+  Application.eventBus.fire(LoginEvent());
+
+  // logic.unRegisterEvents();
+}
+```
