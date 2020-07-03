@@ -26,8 +26,7 @@ class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
         if (metaTypeName == 'Event') {
           var bus = config.bus;
           final busField = metadata.getField('bus');
-          if (busField != null) bus = busField.toStringValue();
-
+          if (!busField.isNull) bus = busField.toStringValue();
           subList.add(_genEventAnotation(methodElement, bus));
         }
       }
