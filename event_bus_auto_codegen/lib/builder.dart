@@ -4,5 +4,9 @@ import 'package:event_bus_auto_codegen/src/event_bus_auto_generator.dart';
 import 'package:source_gen/source_gen.dart';
 
 Builder eventBusAuto(BuilderOptions options) {
-  return SharedPartBuilder([EventBusAutoGenerator(config: Config())], 'event_bus_auto_codegen');
+  return SharedPartBuilder([
+    EventBusAutoGenerator(
+      config: Config(bus: options.config['bus'] ?? ''),
+    ),
+  ], 'event_bus_auto_codegen');
 }

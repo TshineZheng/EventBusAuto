@@ -1,3 +1,5 @@
 class Config {
-  String bus;
+  final String bus;
+
+  Config({this.bus});
 }
