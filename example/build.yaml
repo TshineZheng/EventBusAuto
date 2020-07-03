@@ -2,5 +2,6 @@ targets:
   $default:
     builders:
       event_bus_auto_codegen:
+        enabled: true
         options:
           bus: 'Application.eventBus'

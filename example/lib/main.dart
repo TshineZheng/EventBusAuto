@@ -23,7 +23,7 @@ class Store {}
 @eventauto
 class SubscriptionClass extends Store with _$SubscriptionClassEvent, _$SubscriptionClassEventAuto {
   @override
-  @Event(bus: 'Application.eventBus')
+  @event
   void onLogin(LoginEvent event) {
     print('login event');
   }
