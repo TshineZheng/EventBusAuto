@@ -14,7 +14,7 @@ dependencies:
   analyzer: ^0.39.0
   build: ^1.2.0
 
-dev_dependency_overrides:
+dependency_overrides:
   event_bus_auto:
     path: ../event_bus_auto
 

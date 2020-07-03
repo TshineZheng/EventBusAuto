@@ -75,7 +75,7 @@ EventAnotationRet _genEventAnotation(MethodElement method, String bus) {
 
   final firstParameterType = method.parameters[0].type.getDisplayString();
   final subHolder = '${methodName}Sub';
-  final subHolderDef = 'StreamSubscription<LoginEvent> $subHolder;';
+  final subHolderDef = 'StreamSubscription<$firstParameterType> $subHolder;';
 
   final register = '$subHolder = ${bus}.on<${firstParameterType}>().listen(${methodName});';
 
