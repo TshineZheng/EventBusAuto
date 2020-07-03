@@ -1,9 +1,8 @@
-import 'package:build/src/builder/build_step.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:build/src/builder/build_step.dart';
+import 'package:event_bus_auto/event_auto.dart';
 import 'package:event_bus_auto_codegen/src/config.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:event_bus_auto/event_auto.dart';
-import 'package:event_bus_auto/event.dart';
 
 class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
   final Config config;
@@ -20,14 +19,9 @@ class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
     for (var methodElement in (element as ClassElement).methods) {
       for (var annometadata in methodElement.metadata) {
         final metadata = annometadata.computeConstantValue();
-        final metadatatype = annometadata.runtimeType;
-
-        print("metadatatype is $metadatatype");
-        print("metadata type is ${metadata.type.runtimeType}");
+        // final metadatatype = annometadata.runtimeType;
 
         final metaTypeName = metadata.type.getDisplayString();
-
-        print('metaTypeName is $metaTypeName');
 
         if (metaTypeName == 'Event') {
           var bus = config.bus;
@@ -79,8 +73,7 @@ String _genEventAutoMixinClass(ClassElement classElement, List<EventAnotationRet
 
 EventAnotationRet _genEventAnotation(MethodElement method, String bus) {
   final methodName = method.displayName;
-  print('methodName $methodName');
-  print('method.typeParameters ${method.parameters[0].type}');
+
   final firstParameterType = method.parameters[0].type.getDisplayString();
   final subHolder = '${methodName}Sub';
   final subHolderDef = 'StreamSubscription<LoginEvent> $subHolder;';
