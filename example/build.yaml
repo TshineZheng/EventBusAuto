@@ -3,5 +3,5 @@ targets:
     builders:
       event_bus_auto_codegen:
         enabled: true
-        options:
-          bus: 'Application.eventBus'
+        # options:
+        #   bus: 'Application.eventBus'

@@ -10,6 +10,8 @@ import 'event/login_event.dart';
 part 'main.g.dart';
 
 void main() {
+  EventAuto.eventBus = Application.eventBus;
+
   final subscriptionClass = SubscriptionClass();
   subscriptionClass.registerEvents();
 

@@ -13,7 +13,7 @@ abstract class _$SubscriptionClassEvent {
 mixin _$SubscriptionClassEventAuto on _$SubscriptionClassEvent {
   StreamSubscription<LoginEvent> onLoginSub;
   void registerEvents() {
-    onLoginSub = Application.eventBus.on<LoginEvent>().listen(onLogin);
+    onLoginSub = EventAuto.eventBus.on<LoginEvent>().listen(onLogin);
   }
 
   void unRegisterEvents() {

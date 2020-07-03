@@ -6,7 +6,7 @@ import 'package:source_gen/source_gen.dart';
 Builder eventBusAuto(BuilderOptions options) {
   return SharedPartBuilder([
     EventBusAutoGenerator(
-      config: Config(bus: options.config['bus'] ?? ''),
+      config: Config(bus: options.config['bus'] ?? 'EventAuto.eventBus'),
     ),
   ], 'event_bus_auto_codegen');
 }
