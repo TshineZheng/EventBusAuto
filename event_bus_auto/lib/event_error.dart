@@ -1,0 +1,3 @@
+class EventError {
+  const EventError();
+}
