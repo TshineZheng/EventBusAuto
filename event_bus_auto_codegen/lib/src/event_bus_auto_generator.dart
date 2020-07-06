@@ -54,6 +54,7 @@ String _genEventAutoMixinClass(ClassElement classElement, List<EventAnotationRet
   });
 
   sb.writeln('void registerEvents(){');
+  sb.writeln('unRegisterEvents();');
   eventList.forEach((element) {
     sb.writeln(element.register);
   });
