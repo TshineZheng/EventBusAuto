@@ -8,7 +8,7 @@ builders:
   event_bus_auto_codegen:
     import: "package:event_bus_auto_codegen/builder.dart"
     builder_factories: ["eventBusAuto"]
-    build_extensions: {".dart": ["event_bus_auto.g.part"]}
+    build_extensions: {".dart": [".event_bus_auto.g.part"]}
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
