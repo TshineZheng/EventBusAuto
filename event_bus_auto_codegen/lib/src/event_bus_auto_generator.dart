@@ -15,9 +15,9 @@ class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
       throw InvalidGenerationSourceError('EventAuto class is not ok for ${element.displayName}');
     }
 
-    var subList = <EventAnotationRet>[];
-    for (var methodElement in (element as ClassElement).methods) {
-      for (var annometadata in methodElement.metadata) {
+    final subList = <EventAnotationRet>[];
+    for (final methodElement in (element as ClassElement).methods) {
+      for (final annometadata in methodElement.metadata) {
         final metadata = annometadata.computeConstantValue();
         // final metadatatype = annometadata.runtimeType;
 
@@ -27,7 +27,7 @@ class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
           var bus = config.bus;
           final busField = metadata.getField('bus');
           if (!busField.isNull) bus = busField.toStringValue();
-          subList.add(_genEventAnotation(methodElement, bus));
+          subList.add(_genEventAnotation(element, methodElement, bus));
         }
       }
     }
@@ -39,15 +39,7 @@ class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
 String _genEventAutoMixinClass(ClassElement classElement, List<EventAnotationRet> eventList) {
   final sb = StringBuffer('');
 
-  final eventClassName = '_\$${classElement.displayName}Event';
-
-  sb.writeln('abstract class $eventClassName {');
-  eventList.forEach((element) {
-    sb.writeln('${element.methodDisplayName};');
-  });
-  sb.write('}');
-
-  sb.writeln('mixin _\$${classElement.displayName}EventAuto on ${eventClassName}{');
+  sb.writeln('mixin _\$${classElement.displayName}EventAuto {');
 
   eventList.forEach((element) {
     sb.writeln('${element.subHolderDef}');
@@ -71,33 +63,40 @@ String _genEventAutoMixinClass(ClassElement classElement, List<EventAnotationRet
   return sb.toString();
 }
 
-EventAnotationRet _genEventAnotation(MethodElement method, String bus) {
+EventAnotationRet _genEventAnotation(ClassElement classElement, MethodElement method, String bus) {
+  if (method.parameters.length != 1) {
+    throw InvalidGenerationSourceError(
+        'Event method must be 1 parameter >> ${classElement.displayName}.${method.displayName}');
+  }
   final methodName = method.displayName;
 
   final firstParameterType = method.parameters[0].type.getDisplayString();
   final subHolder = '${methodName}Sub';
   final subHolderDef = 'StreamSubscription<$firstParameterType> $subHolder;';
 
-  final register = '$subHolder = ${bus}.on<${firstParameterType}>().listen(${methodName});';
+  final register =
+      '$subHolder = ${bus}.on<${firstParameterType}>().listen((this as ${classElement.displayName}).${methodName});';
 
   return EventAnotationRet(
     subHolder: subHolder,
     register: register,
     subHolderDef: subHolderDef,
-    methodDisplayName: method.getDisplayString(withNullability: false),
   );
 }
 
 class EventAnotationRet {
+  /// StreamSubscription holder
   final String subHolder;
+
+  /// StreamSubscription define
   final String subHolderDef;
+
+  /// StreamSubscription register
   final String register;
-  final String methodDisplayName;
 
   EventAnotationRet({
     this.subHolder,
     this.register,
     this.subHolderDef,
-    this.methodDisplayName,
   });
 }

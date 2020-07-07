@@ -6,14 +6,13 @@ import 'package:event_bus_auto/event_auto.dart';
 
 part 'main.g.dart';
 
-class LoginEvent {}
+class NewOrderEvent {}
 
 @EventAuto()
-class Logic with _$LogicEvent, _$LogicEventAuto {
-  @override
+class Logic with _$LogicEventAuto {
   @event
-  void onLogin(LoginEvent event) {
-    print('login event');
+  void onNewOrderEvent(NewOrderEvent event) {
+    print('new order event');
   }
 }
 
@@ -26,7 +25,7 @@ void main() {
   final logic = Logic();
   logic.registerEvents();
 
-  eventBus.fire(LoginEvent());
+  eventBus.fire(NewOrderEvent());
 
   // logic.unRegisterEvents();
 }
