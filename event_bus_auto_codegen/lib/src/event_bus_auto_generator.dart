@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:event_bus_auto/event_auto.dart';
+import 'package:event_bus_auto/event_bus_auto.dart';
 import 'package:event_bus_auto_codegen/src/config.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -15,24 +16,19 @@ class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
       throw InvalidGenerationSourceError('EventAuto class is not ok for ${element.displayName}');
     }
 
+    final clazz = element as ClassElement;
+
     final subList = <EventAnotationRet>[];
-    for (final methodElement in (element as ClassElement).methods) {
-      for (final annometadata in methodElement.metadata) {
-        final metadata = annometadata.computeConstantValue();
-        // final metadatatype = annometadata.runtimeType;
-
-        final metaTypeName = metadata.type.getDisplayString();
-
-        if (metaTypeName == 'Event') {
-          var bus = config.bus;
-          final busField = metadata.getField('bus');
-          if (!busField.isNull) bus = busField.toStringValue();
-          subList.add(_genEventAnotation(element, methodElement, bus));
-        }
+    for (final methodElement in clazz.methods) {
+      if (_eventAnnotationChecker.hasAnnotationOfExact(methodElement)) {
+        var bus = config.bus;
+        final busField = _eventAnnotationChecker.firstAnnotationOfExact(methodElement).getField('bus');
+        if (!busField.isNull) bus = busField.toStringValue();
+        subList.add(_genEventAnotation(clazz, methodElement, bus));
       }
     }
 
-    return _genEventAutoMixinClass(element, subList);
+    return _genEventAutoMixinClass(clazz, subList);
   }
 }
 
@@ -100,3 +96,5 @@ class EventAnotationRet {
     this.subHolderDef,
   });
 }
+
+final _eventAnnotationChecker = const TypeChecker.fromRuntime(Event);
