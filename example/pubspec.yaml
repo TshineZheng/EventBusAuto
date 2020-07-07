@@ -11,7 +11,7 @@ dependencies:
   event_bus: ^1.1.1
   event_bus_auto:
 
-dependencies_overrides:
+dependency_overrides:
   event_bus_auto:
     path: ../event_bus_auto
 
