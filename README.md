@@ -6,11 +6,11 @@ Add dependencies in your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  event_bus_auto: ^0.0.2
+  event_bus_auto: latest
 
 dev_dependencies:
   build_runner: ^1.10.0
-  event_bus_auto_codegen: ^0.0.2
+  event_bus_auto_codegen: latest
 ```
 
 # Usage
@@ -23,14 +23,13 @@ import 'package:event_bus_auto/event_auto.dart';
 
 part 'main.g.dart';
 
-class LoginEvent {}
+class NewOrderEvent {}
 
 @EventAuto()
-class Logic with _$LogicEvent, _$LogicEventAuto {
-  @override
+class Logic with _$LogicEventAuto {
   @event
-  void onLogin(LoginEvent event) {
-    print('login event');
+  void onNewOrderEvent(NewOrderEvent event) {
+    print('new order event');
   }
 }
 
@@ -43,9 +42,8 @@ void main() {
   final logic = Logic();
   logic.registerEvents();
 
-  eventBus.fire(LoginEvent());
+  eventBus.fire(NewOrderEvent());
 
   // logic.unRegisterEvents();
 }
-
 ```
