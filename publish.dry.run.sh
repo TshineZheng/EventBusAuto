@@ -1,5 +1,5 @@
 cd event_bus_auto
-pub publish
+pub publish --dry-run
 cd ..
 cd event_bus_auto_codegen
-pub publish
+pub publish --dry-run
