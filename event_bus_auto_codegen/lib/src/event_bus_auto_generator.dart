@@ -83,7 +83,7 @@ EventAnotationRet _genEventAnotation(ClassElement classElement, MethodElement me
   }
   final methodName = method.displayName;
 
-  final firstParameterType = method.parameters[0].type.getDisplayString();
+  final firstParameterType = method.parameters[0].type.getDisplayString(withNullability: false);
   final subHolder = '${methodName}Sub';
   final subHolderDef = 'StreamSubscription<$firstParameterType> $subHolder;';
 
