@@ -7,11 +7,11 @@ part of 'main.dart';
 // **************************************************************************
 
 mixin _$LogicEventAuto {
-  StreamSubscription<NewOrderEvent> onNewOrderEventSub;
+  StreamSubscription<NewOrderEvent>? onNewOrderEventSub;
   void registerEvents() {
     unRegisterEvents();
     onNewOrderEventSub = EventAuto.eventBus
-        .on<NewOrderEvent>()
+        ?.on<NewOrderEvent>()
         .listen((this as Logic).onNewOrderEvent);
   }
 

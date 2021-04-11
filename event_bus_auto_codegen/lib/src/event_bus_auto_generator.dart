@@ -2,15 +2,16 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:event_bus_auto/event_auto.dart';
 import 'package:event_bus_auto/event_bus_auto.dart';
-import 'package:event_bus_auto_codegen/src/config.dart';
-import 'package:event_bus_auto_codegen/src/log.dart';
 import 'package:source_gen/source_gen.dart';
+
+import 'config.dart';
+import 'log.dart';
 
 class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
   /// 配置
   final Config config;
 
-  EventBusAutoGenerator({this.config}) {
+  EventBusAutoGenerator({required this.config}) {
     log_debug = config.debug;
   }
 
@@ -21,7 +22,7 @@ class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
       throw InvalidGenerationSourceError('EventAuto class is not ok for ${element.displayName}');
     }
 
-    final clazz = element as ClassElement;
+    final clazz = element;
 
     log('processing class ${clazz.name}');
 
@@ -38,8 +39,8 @@ class EventBusAutoGenerator extends GeneratorForAnnotation<EventAuto> {
         var bus = config.bus;
 
         /// 如果注解里有自定义bus，则取出并使用
-        final busField = _eventAnnotationChecker.firstAnnotationOfExact(methodElement).getField('bus');
-        if (!busField.isNull) bus = busField.toStringValue();
+        final busField = _eventAnnotationChecker.firstAnnotationOfExact(methodElement)?.getField('bus');
+        if (busField != null && !busField.isNull) bus = busField.toStringValue()!;
 
         subList.add(_genEventAnotation(clazz, methodElement, bus));
       }
@@ -85,10 +86,10 @@ EventAnotationRet _genEventAnotation(ClassElement classElement, MethodElement me
 
   final firstParameterType = method.parameters[0].type.getDisplayString(withNullability: false);
   final subHolder = '${methodName}Sub';
-  final subHolderDef = 'StreamSubscription<$firstParameterType> $subHolder;';
+  final subHolderDef = 'StreamSubscription<$firstParameterType>? $subHolder;';
 
   final register =
-      '$subHolder = ${bus}.on<${firstParameterType}>().listen((this as ${classElement.displayName}).${methodName});';
+      '$subHolder = $bus?.on<$firstParameterType>().listen((this as ${classElement.displayName}).$methodName);';
 
   return EventAnotationRet(
     subHolder: subHolder,
@@ -108,9 +109,9 @@ class EventAnotationRet {
   final String register;
 
   EventAnotationRet({
-    this.subHolder,
-    this.register,
-    this.subHolderDef,
+    required this.subHolder,
+    required this.register,
+    required this.subHolderDef,
   });
 }
 
