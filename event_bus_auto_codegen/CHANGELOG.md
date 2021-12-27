@@ -13,3 +13,7 @@
 ## 0.1.0
 
 - Null Safety
+
+## 0.1.0+1
+
+- update dependencies
