@@ -47,3 +47,7 @@ void main() {
   // logic.unRegisterEvents();
 }
 ```
+
+```
+pub run build_runner build
+```

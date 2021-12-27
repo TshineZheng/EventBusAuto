@@ -1,7 +1,8 @@
 import 'package:event_bus/event_bus.dart';
 
 class EventAuto {
-  static EventBus eventBus;
+  /// global eventBus instance
+  static EventBus? eventBus;
 
   const EventAuto();
 }
