@@ -6,11 +6,11 @@ Add dependencies in your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  event_bus_auto: latest
+  event_bus_auto:
 
 dev_dependencies:
   build_runner: ^1.10.0
-  event_bus_auto_codegen: latest
+  event_bus_auto_codegen:
 ```
 
 # Usage
