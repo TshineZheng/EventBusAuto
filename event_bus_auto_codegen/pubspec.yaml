@@ -1,6 +1,6 @@
 name: event_bus_auto_codegen
 description: A tool for generating un/registerEvents method for EventBus, based on build_runner.
-version: 0.1.0+1
+version: 0.1.0+2
 repository: https://github.com/TshineZheng/EventBusAuto
 homepage: https://blog.tshine.me
 # author: Tshine <gtshine@gmail.com>
@@ -10,7 +10,7 @@ environment:
 
 dependencies:
   source_gen: ^1.0.5
-  analyzer: ^2.0.0
+  analyzer:
   build: ^2.1.0
   event_bus_auto: ^0.1.0
   # analyzer: ^1.4.0
